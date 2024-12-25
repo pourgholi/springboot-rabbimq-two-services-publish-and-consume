@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+    username: engine-cor-db
+    password: engine-identity-db
+  jpa:
+    hibernate:
+      ddl-auto: create

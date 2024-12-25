@@ -1,0 +1,80 @@
+version: "3.8"
+
+services:
+
+  postgres-engine-identity:
+    image: postgres:14.5-alpine
+    container_name: postgres-engine-identity
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: engine-identity-db
+      POSTGRES_USER: engine-identity-db
+      POSTGRES_PASSWORD: engine-identity-db
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  rabbitmq:
+    image: rabbitmq:3.10.5-management-alpine
+    container_name: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 1s
+      timeout: 3s
+      retries: 30
+
+  engine-identity:
+    build:
+      context: ../engine-identity
+      dockerfile: ./DockerfileDebug
+    image: engine-identity:pt
+    container_name: engine-identity
+    ports:
+      - "9081:9081"
+      - "5005:5005"
+    healthcheck:
+      test: "curl -f http://localhost:9081/ || exit 1"
+    environment:
+      - WAIT_HOSTS=postgres-engine-identity:5432,rabbitmq:5672
+      # Engine API ENVs
+      - ENGINE_API_PORT=9081
+      - ENGINE_API_HOSTNAME=engine-identity
+      # DB ENVs
+      - ENGINE_API_POSTGRESS_HOST=postgres-engine-identity
+      - ENGINE_API_POSTGRESS_DATABASE_NAME=engine-identity-db
+      - ENGINE_API_DTATSOURCE_USERNAME=engine-identity-db
+      - ENGINE_API_DTATSOURCE_PASSWORD=engine-identity-db
+      # Rabbitmq ENVs
+      - ENGINE_API_RABBITMQ_HOST_NAME=rabbitmq
+      - ENGINE_API_RABBITMQ_HOST_PORT=5672
+      - ENGINE_API_RABBITMQ_USERNAME=admin
+      - ENGINE_API_RABBITMQ_PASSWORD=admin
+
+
+  engine-core:
+    build:
+      context: ../engine-core
+      dockerfile: ./DockerfileDebug
+    image: engine-core:pt
+    container_name: engine-core
+    ports:
+      - "9086:9086"
+      - "5010:5010"
+    healthcheck:
+      test: "curl -f http://localhost:9086/ || exit 1"
+    environment:
+      - WAIT_HOSTS=rabbitmq:5672
+      # Rabbitmq ENVs
+      - ENGINE_API_RABBITMQ_HOST_NAME=rabbitmq
+      - ENGINE_API_RABBITMQ_HOST_PORT=5672
+      - ENGINE_API_RABBITMQ_USERNAME=admin
+      - ENGINE_API_RABBITMQ_PASSWORD=admin

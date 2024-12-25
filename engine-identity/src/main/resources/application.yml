@@ -1,0 +1,65 @@
+server:
+  port: ${ENGINE_API_PORT:9081}
+
+spring:
+  application:
+    name: ${ENGINE_API_HOSTNAME:engine-identity}
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${ENGINE_API_POSTGRESS_HOST:postgres-engine-identity}/${ENGINE_API_POSTGRESS_DATABASE_NAME:engine-identity-db}
+    username: ${ENGINE_API_DTATSOURCE_USERNAME:engine-identity-db}
+    password: ${ENGINE_API_DTATSOURCE_PASSWORD:engine-identity-db}
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create
+  data:
+    rest:
+      base-path: /api
+  rabbitmq:
+    host: ${ENGINE_API_RABBITMQ_HOST_NAME:rabbitmq}
+    port: ${ENGINE_API_RABBITMQ_HOST_PORT:5672}
+    username: ${ENGINE_API_RABBITMQ_USERNAME:admin}
+    password: ${ENGINE_API_RABBITMQ_PASSWORD:admin}
+  cloud:
+    stream:
+      function:
+        definition: consumeProcessedIdentity
+      bindings:
+        unprocessed-identity-out-0:
+          destination: unprocessed-identity
+        consumeProcessedIdentity-in-0:
+          destination: processed-identity
+          group: identity-processed-consumer
+          contentType: application/json
+
+logging.pattern.level: '%5p [${spring.application.name:},%mdc{trace_id:-},%mdc{span_id:-}]'
+
+management:
+  endpoints:
+    web:
+      exposure.include: info, health, beans
+  endpoint:
+    metrics:
+      enabled: true
+    health:
+      show-details: always
+
+springdoc:
+  show-actuator: true
+  swagger-ui:
+    groups-order: DESC
+    disable-swagger-default-url: true
+    doc-expansion: none
+
+logging:
+  level:
+    org.springframework.cloud.stream: DEBUG
+    org.springframework.integration: DEBUG
+    org.springframework.amqp.rabbit: DEBUG

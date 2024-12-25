@@ -1,0 +1,83 @@
+#image: docker:latest
+# DinD service is required for Testcontainers
+#services:
+#  - name: docker:dind
+#    # explicitly disable tls to avoid docker startup interruption
+#    command: ["--tls=false"]
+
+#variables:
+#  # Instruct Testcontainers to use the daemon of DinD.
+#  DOCKER_HOST: "tcp://docker:2375"
+#  # Instruct Docker not to start over TLS.
+#  DOCKER_TLS_CERTDIR: ""
+#  # Improve performance with overlayfs.
+#  DOCKER_DRIVER: overlay2
+
+stages:
+  - build
+  - package
+  - redeploy
+
+gradlew-build:
+  image: gradle:7.5.1-alpine
+  stage: build
+  tags:
+    - km-runner
+  variables:
+    GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+  script:
+    - gradle build -x test
+  artifacts:
+    paths:
+      - build/libs/engine-identity-0.0.1-SNAPSHOT.jar
+    reports:
+      junit: build/test-results/test/**/TEST-*.xml
+
+docker-build:
+  image: docker:19.03.12
+  stage: package
+  services:
+    - docker:19.03.12-dind
+  tags:
+    - km-runner
+  variables:
+    IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -t $IMAGE_TAG .
+    - docker push $IMAGE_TAG
+  dependencies:
+    - gradlew-build
+
+redeploy-service:
+  stage: redeploy
+  image: registry.gitlab.com/kubemachine-services/engine-deployment-k8s/argocd-cli:latest
+  only:
+    - dev
+    - stage
+  tags:
+    - km-runner
+  environment:
+    name: $CI_COMMIT_REF_SLUG
+    url: https://argocd.$CI_COMMIT_REF_SLUG.dashboard.kubemachine.com/applications/argocd/engine-identity
+  variables:
+    ARGOCD_DOMAIN: argocd.$CI_COMMIT_REF_SLUG.dashboard.kubemachine.com
+  script:
+    - argocd login --username $ARGOCD_USERNAME --password $ARGOCD_PASSWORD $ARGOCD_DOMAIN --grpc-web
+    - argocd app actions run engine-identity --kind Deployment restart --all --grpc-web
+
+redeploy-service-prod:
+  stage: redeploy
+  image: registry.gitlab.com/kubemachine-services/engine-deployment-k8s/argocd-cli:latest
+  only:
+    - production
+  tags:
+    - km-runner
+  environment:
+    name: $CI_COMMIT_REF_SLUG
+    url: https://argocd.uniity.cloud/applications/argocd/engine-identity
+  variables:
+    ARGOCD_DOMAIN: argocd.uniity.cloud
+  script:
+    - argocd login --username $ARGOCD_USERNAME --password $ARGOCD_PASSWORD $ARGOCD_DOMAIN --grpc-web
+    - argocd app actions run engine-identity --kind Deployment restart --all --grpc-web

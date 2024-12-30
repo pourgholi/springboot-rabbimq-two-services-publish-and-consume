@@ -6,11 +6,11 @@ spring:
     name: ${ENGINE_API_HOSTNAME:engine-identity}
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${ENGINE_API_POSTGRESS_HOST:postgres-engine-identity}/${ENGINE_API_POSTGRESS_DATABASE_NAME:engine-identity-db}
-    username: ${ENGINE_API_DTATSOURCE_USERNAME:engine-identity-db}
-    password: ${ENGINE_API_DTATSOURCE_PASSWORD:engine-identity-db}
+    url: jdbc:postgresql://${ENGINE_API_POSTGRESS_HOST}/${ENGINE_API_POSTGRESS_DATABASE_NAME}
+    username: ${ENGINE_API_DTATSOURCE_USERNAME}
+    password: ${ENGINE_API_DTATSOURCE_PASSWORD}
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     properties:
       hibernate:
         temp:
@@ -28,13 +28,13 @@ spring:
     username: ${ENGINE_API_RABBITMQ_USERNAME:admin}
     password: ${ENGINE_API_RABBITMQ_PASSWORD:admin}
   cloud:
+    function:
+      definition: processedIdentity
     stream:
-      function:
-        definition: consumeProcessedIdentity
       bindings:
         unprocessed-identity-out-0:
           destination: unprocessed-identity
-        consumeProcessedIdentity-in-0:
+        processedIdentity-in-0:
           destination: processed-identity
           group: identity-processed-consumer
           contentType: application/json

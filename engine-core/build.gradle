@@ -1,6 +1,6 @@
 plugins {
-    id 'org.springframework.boot' version '2.7.10'
-    id 'io.spring.dependency-management' version '1.0.13.RELEASE'
+    id 'org.springframework.boot' version '3.3.4'
+    id 'io.spring.dependency-management' version '1.1.7'
     id 'java-library'
 }
 
@@ -9,7 +9,7 @@ version = '0.0.1-SNAPSHOT'
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
+        languageVersion.set(JavaLanguageVersion.of(21))
     }
 }
 
@@ -19,36 +19,29 @@ repositories {
 }
 
 ext {
-    set('springCloudVersion', "2021.0.4")
+    set('springCloudVersion', "2023.0.3")
 }
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
-    implementation 'org.springframework.cloud:spring-cloud-stream'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation('org.springframework.boot:spring-boot-starter-json')
+
+    implementation 'org.springframework.cloud:spring-cloud-stream'
     implementation 'org.springframework.cloud:spring-cloud-stream-binder-rabbit'
-    implementation 'org.gitlab4j:gitlab4j-api:5.0.1'
-    implementation 'org.kohsuke:github-api:1.313'
-    implementation 'org.eclipse.jgit:org.eclipse.jgit:6.4.0.202211300538-r'
-    implementation 'org.apache.commons:commons-text:1.10.0'
-    implementation 'commons-io:commons-io:2.11.0'
-    implementation 'net.lingala.zip4j:zip4j:2.11.2'
-    compileOnly 'org.projectlombok:lombok'
+
+    implementation 'com.google.code.gson:gson:2.10.1'
+
+    compileOnly 'org.projectlombok:lombok:1.18.30'
     annotationProcessor 'org.projectlombok:lombok'
 
-    implementation 'com.kubemachine:engine-git-client:0.0.1-SNAPSHOT'
-
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.amqp:spring-rabbit-test'
-
-    testImplementation 'org.microshed:microshed-testing-testcontainers:0.9.1'
-    testImplementation 'org.testcontainers:junit-jupiter:1.17.6'
-    testImplementation 'org.testcontainers:postgresql:1.17.6'
-    testImplementation 'org.testcontainers:rabbitmq:1.17.6'
-    testImplementation 'org.assertj:assertj-core:3.23.1'
-    testImplementation 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+    testImplementation 'org.testcontainers:junit-jupiter'
+    testImplementation 'org.testcontainers:rabbitmq'
+    testImplementation'io.rest-assured:rest-assured:5.5.0'
 }
 
 dependencyManagement {

@@ -2,7 +2,8 @@
   "openapi": "3.0.1",
   "info": {
     "title": "engine-identity",
-    version: "0.0.1-SNAPSHOT"},
+    "version": "0.0.1-SNAPSHOT"
+  },
   "servers": [
     {
       "url": "http://localhost:9081",
@@ -62,14 +63,14 @@
                   "$ref": "#/components/schemas/PagedModelEntityModelIdentity"
                 }
               },
-              "application/x-spring-data-compact+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PagedModelEntityModelIdentity"
-                }
-              },
               "text/uri-list": {
                 "schema": {
                   "type": "string"
+                }
+              },
+              "application/x-spring-data-compact+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedModelEntityModelIdentity"
                 }
               }
             }
@@ -417,43 +418,17 @@
           }
         }
       },
-      "Link": {
+      "Links": {
         "type": "object",
-        "properties": {
-          "href": {
-            "type": "string"
-          },
-          "hreflang": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string"
-          },
-          "deprecation": {
-            "type": "string"
-          },
-          "profile": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "templated": {
-            "type": "boolean"
-          }
+        "additionalProperties": {
+          "$ref": "#/components/schemas/Link"
         }
       },
       "RepresentationModelObject": {
         "type": "object",
         "properties": {
           "_links": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Link"
-            }
+            "$ref": "#/components/schemas/Links"
           }
         }
       },
@@ -490,11 +465,14 @@
           "identityLastName": {
             "type": "string"
           },
+          "progressStatus": {
+            "type": "string"
+          },
+          "identityStatus": {
+            "type": "string"
+          },
           "_links": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Link"
-            }
+            "$ref": "#/components/schemas/Links"
           }
         }
       },
@@ -534,10 +512,7 @@
             }
           },
           "_links": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Link"
-            }
+            "$ref": "#/components/schemas/Links"
           },
           "page": {
             "$ref": "#/components/schemas/PageMetadata"
@@ -559,10 +534,7 @@
             }
           },
           "_links": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Link"
-            }
+            "$ref": "#/components/schemas/Links"
           }
         }
       },
@@ -598,6 +570,41 @@
           },
           "identityLastName": {
             "type": "string"
+          },
+          "progressStatus": {
+            "type": "string"
+          },
+          "identityStatus": {
+            "type": "string"
+          }
+        }
+      },
+      "Link": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string"
+          },
+          "hreflang": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "deprecation": {
+            "type": "string"
+          },
+          "profile": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "templated": {
+            "type": "boolean"
           }
         }
       }

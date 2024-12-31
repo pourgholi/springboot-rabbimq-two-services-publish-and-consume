@@ -42,7 +42,7 @@ public class IdentityRepositorySpringDataRestTest {
     @Test
     void shouldCreateIdentity() {
         var identity = new Identity(IdentityFirstName.FIRST_NAME.name(), IdentityLastName.IDENTITY_LAST_NAME.name(), ProgressStatus.IN_PROGRESS.name(), IdentityStatus.ACTIVE.name());
-        var project = new Project("Test project", UUID.fromString("2fe641c3-c605-4cb2-91c2-a86120db178a"));
+        var project = new Project("Test project");
 
         Project savedProject = projectRepository.save(project);
         identity.setProject(savedProject);

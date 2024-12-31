@@ -2,10 +2,9 @@ package com.kubemachine.engine.api.audit.model;
 
 
 import com.kubemachine.engine.api.generic.model.base.BaseEntity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.Version;
+import com.kubemachine.engine.api.project.model.Project;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -43,4 +42,10 @@ public class AuditMetadata extends BaseEntity {
 
     @Version
     private Long version;
+
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @ManyToOne
+    @NotNull
+    private Project project;
 }

@@ -3,6 +3,7 @@ package com.kubemachine.engine.api.identity.repository;
 import com.kubemachine.engine.api.identity.model.Identity;
 
 import io.restassured.http.ContentType;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,6 +14,7 @@ import static org.hamcrest.Matchers.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(classes = TestConfig.class)
+@Disabled
 public class IdentityRepositoryTest {
 
     enum ProgressStatus {

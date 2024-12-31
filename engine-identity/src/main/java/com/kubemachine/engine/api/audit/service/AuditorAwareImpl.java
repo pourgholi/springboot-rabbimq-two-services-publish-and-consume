@@ -10,6 +10,6 @@ public class AuditorAwareImpl implements AuditorAware<UUID> {
     @NotNull
     @Override
     public Optional<UUID> getCurrentAuditor() {
-        return Optional.of(UUID.randomUUID());
+        return Optional.of(UUID.fromString("b1fd855f-a02d-4109-a01e-84a72d91a5e9"));
     }
 }

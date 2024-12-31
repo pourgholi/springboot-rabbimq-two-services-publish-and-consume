@@ -107,45 +107,6 @@
         }
       }
     },
-    "/api/identity/search/findAllByIdentityFirstNameContainsIgnoreCaseOrIdentityLastNameContainsIgnoreCase": {
-      "get": {
-        "tags": [
-          "identity-search-controller"
-        ],
-        "operationId": "executeSearch-identity-get",
-        "parameters": [
-          {
-            "name": "identityName",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "identityUrl",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/hal+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CollectionModelEntityModelIdentity"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        }
-      }
-    },
     "/api/identity/{id}": {
       "get": {
         "tags": [
@@ -299,6 +260,259 @@
         }
       }
     },
+    "/api/identity/{id}/project": {
+      "get": {
+        "tags": [
+          "identity-property-reference-controller"
+        ],
+        "description": "get-project-by-identity-Id",
+        "operationId": "followPropertyReference-identity-get_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityModelProject"
+                }
+              },
+              "text/uri-list": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "identity-property-reference-controller"
+        ],
+        "description": "update-project-by-identity-Id",
+        "operationId": "createPropertyReference-identity-put",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CollectionModelObject"
+              }
+            },
+            "text/uri-list": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "application/x-spring-data-compact+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CollectionModelObject"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityModelProject"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityModelProject"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "identity-property-reference-controller"
+        ],
+        "description": "delete-project-by-identity-Id",
+        "operationId": "deletePropertyReference-identity-delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "identity-property-reference-controller"
+        ],
+        "description": "patch-project-by-identity-Id",
+        "operationId": "createPropertyReference-identity-patch",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CollectionModelObject"
+              }
+            },
+            "text/uri-list": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "application/x-spring-data-compact+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CollectionModelObject"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityModelProject"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/identity/{id}/project/{propertyId}": {
+      "get": {
+        "tags": [
+          "identity-property-reference-controller"
+        ],
+        "description": "get-project-by-identity-Id",
+        "operationId": "followPropertyReference-identity-get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "propertyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityModelProject"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "identity-property-reference-controller"
+        ],
+        "description": "delete-project-by-identity-Id",
+        "operationId": "deletePropertyReferenceId-identity-delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "propertyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
     "/api/profile": {
       "get": {
         "tags": [
@@ -345,6 +559,850 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/profile/project": {
+      "get": {
+        "tags": [
+          "profile-controller"
+        ],
+        "operationId": "descriptor_1_1_2",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/alps+json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JsonSchema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/profile/projectMember": {
+      "get": {
+        "tags": [
+          "profile-controller"
+        ],
+        "operationId": "descriptor_1_1_3",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/alps+json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JsonSchema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/project": {
+      "get": {
+        "tags": [
+          "project-entity-controller"
+        ],
+        "description": "get-project",
+        "operationId": "getCollectionResource-project-get_1",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Zero-based page index (0..N)",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "The size of the page to be returned",
+            "required": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "default": 20
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedModelEntityModelProject"
+                }
+              },
+              "text/uri-list": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/x-spring-data-compact+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedModelEntityModelProject"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "project-entity-controller"
+        ],
+        "description": "create-project",
+        "operationId": "postCollectionResource-project-post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectRequestBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityModelProject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/project/{id}": {
+      "get": {
+        "tags": [
+          "project-entity-controller"
+        ],
+        "description": "get-project",
+        "operationId": "getItemResource-project-get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityModelProject"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "project-entity-controller"
+        ],
+        "description": "update-project",
+        "operationId": "putItemResource-project-put",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectRequestBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityModelProject"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityModelProject"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "project-entity-controller"
+        ],
+        "description": "delete-project",
+        "operationId": "deleteItemResource-project-delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "project-entity-controller"
+        ],
+        "description": "patch-project",
+        "operationId": "patchItemResource-project-patch",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectRequestBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityModelProject"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/projectMember": {
+      "get": {
+        "tags": [
+          "project-member-entity-controller"
+        ],
+        "description": "get-projectmember",
+        "operationId": "getCollectionResource-projectmember-get_1",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Zero-based page index (0..N)",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "The size of the page to be returned",
+            "required": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "default": 20
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedModelEntityModelProjectMember"
+                }
+              },
+              "text/uri-list": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/x-spring-data-compact+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedModelEntityModelProjectMember"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "project-member-entity-controller"
+        ],
+        "description": "create-projectmember",
+        "operationId": "postCollectionResource-projectmember-post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectMemberRequestBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityModelProjectMember"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/projectMember/search/findAllByProjectMembershipId": {
+      "get": {
+        "tags": [
+          "project-member-search-controller"
+        ],
+        "operationId": "executeSearch-projectmember-get",
+        "parameters": [
+          {
+            "name": "projectMembershipId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectionModelEntityModelProjectMember"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/projectMember/{id}": {
+      "get": {
+        "tags": [
+          "project-member-entity-controller"
+        ],
+        "description": "get-projectmember",
+        "operationId": "getItemResource-projectmember-get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityModelProjectMember"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "project-member-entity-controller"
+        ],
+        "description": "update-projectmember",
+        "operationId": "putItemResource-projectmember-put",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectMemberRequestBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityModelProjectMember"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityModelProjectMember"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "project-member-entity-controller"
+        ],
+        "description": "delete-projectmember",
+        "operationId": "deleteItemResource-projectmember-delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "project-member-entity-controller"
+        ],
+        "description": "patch-projectmember",
+        "operationId": "patchItemResource-projectmember-patch",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectMemberRequestBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityModelProjectMember"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/projectMember/{id}/project": {
+      "get": {
+        "tags": [
+          "project-member-property-reference-controller"
+        ],
+        "description": "get-project-by-projectmember-Id",
+        "operationId": "followPropertyReference-projectmember-get_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityModelProject"
+                }
+              },
+              "text/uri-list": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "project-member-property-reference-controller"
+        ],
+        "description": "update-project-by-projectmember-Id",
+        "operationId": "createPropertyReference-projectmember-put",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CollectionModelObject"
+              }
+            },
+            "text/uri-list": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "application/x-spring-data-compact+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CollectionModelObject"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityModelProject"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityModelProject"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "project-member-property-reference-controller"
+        ],
+        "description": "delete-project-by-projectmember-Id",
+        "operationId": "deletePropertyReference-projectmember-delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "project-member-property-reference-controller"
+        ],
+        "description": "patch-project-by-projectmember-Id",
+        "operationId": "createPropertyReference-projectmember-patch",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CollectionModelObject"
+              }
+            },
+            "text/uri-list": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "application/x-spring-data-compact+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CollectionModelObject"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityModelProject"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/projectMember/{id}/project/{propertyId}": {
+      "get": {
+        "tags": [
+          "project-member-property-reference-controller"
+        ],
+        "description": "get-project-by-projectmember-Id",
+        "operationId": "followPropertyReference-projectmember-get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "propertyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityModelProject"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "project-member-property-reference-controller"
+        ],
+        "description": "delete-project-by-projectmember-Id",
+        "operationId": "deletePropertyReferenceId-projectmember-delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "propertyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       }
@@ -433,6 +1491,9 @@
         }
       },
       "EntityModelIdentity": {
+        "required": [
+          "project"
+        ],
         "type": "object",
         "properties": {
           "id": {
@@ -519,26 +1580,7 @@
           }
         }
       },
-      "CollectionModelEntityModelIdentity": {
-        "type": "object",
-        "properties": {
-          "_embedded": {
-            "type": "object",
-            "properties": {
-              "identity": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/EntityModelIdentity"
-                }
-              }
-            }
-          },
-          "_links": {
-            "$ref": "#/components/schemas/Links"
-          }
-        }
-      },
-      "IdentityRequestBody": {
+      "EntityModelProject": {
         "type": "object",
         "properties": {
           "id": {
@@ -565,6 +1607,182 @@
             "type": "integer",
             "format": "int64"
           },
+          "projectName": {
+            "type": "string"
+          },
+          "_links": {
+            "$ref": "#/components/schemas/Links"
+          }
+        }
+      },
+      "CollectionModelObject": {
+        "type": "object",
+        "properties": {
+          "_embedded": {
+            "type": "object",
+            "properties": {
+              "objects": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "_links": {
+            "$ref": "#/components/schemas/Links"
+          }
+        }
+      },
+      "PagedModelEntityModelProject": {
+        "type": "object",
+        "properties": {
+          "_embedded": {
+            "type": "object",
+            "properties": {
+              "project": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EntityModelProject"
+                }
+              }
+            }
+          },
+          "_links": {
+            "$ref": "#/components/schemas/Links"
+          },
+          "page": {
+            "$ref": "#/components/schemas/PageMetadata"
+          }
+        }
+      },
+      "EntityModelProjectMember": {
+        "required": [
+          "project",
+          "projectMemberStatus",
+          "projectMembershipId",
+          "userId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdByUser": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "modifiedByUser": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastModifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "version": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "projectMembershipId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "projectMemberStatus": {
+            "type": "string",
+            "enum": [
+              "ENABLED",
+              "DISABLED"
+            ]
+          },
+          "_links": {
+            "$ref": "#/components/schemas/Links"
+          }
+        }
+      },
+      "PagedModelEntityModelProjectMember": {
+        "type": "object",
+        "properties": {
+          "_embedded": {
+            "type": "object",
+            "properties": {
+              "projectMember": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EntityModelProjectMember"
+                }
+              }
+            }
+          },
+          "_links": {
+            "$ref": "#/components/schemas/Links"
+          },
+          "page": {
+            "$ref": "#/components/schemas/PageMetadata"
+          }
+        }
+      },
+      "CollectionModelEntityModelProjectMember": {
+        "type": "object",
+        "properties": {
+          "_embedded": {
+            "type": "object",
+            "properties": {
+              "projectMember": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EntityModelProjectMember"
+                }
+              }
+            }
+          },
+          "_links": {
+            "$ref": "#/components/schemas/Links"
+          }
+        }
+      },
+      "IdentityRequestBody": {
+        "required": [
+          "project"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdByUser": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "modifiedByUser": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastModifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "version": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "project": {
+            "type": "string"
+          },
           "identityFirstName": {
             "type": "string"
           },
@@ -575,6 +1793,91 @@
             "type": "string"
           },
           "identityStatus": {
+            "type": "string"
+          }
+        }
+      },
+      "ProjectRequestBody": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdByUser": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "modifiedByUser": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastModifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "version": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "projectName": {
+            "type": "string"
+          }
+        }
+      },
+      "ProjectMemberRequestBody": {
+        "required": [
+          "project",
+          "projectMemberStatus",
+          "projectMembershipId",
+          "userId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdByUser": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "modifiedByUser": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastModifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "version": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "projectMembershipId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "projectMemberStatus": {
+            "type": "string",
+            "enum": [
+              "ENABLED",
+              "DISABLED"
+            ]
+          },
+          "project": {
             "type": "string"
           }
         }

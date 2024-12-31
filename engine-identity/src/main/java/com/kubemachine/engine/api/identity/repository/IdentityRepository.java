@@ -9,5 +9,4 @@ import java.util.UUID;
 
 @RepositoryRestResource(collectionResourceRel = "identity", path = "identity")
 public interface IdentityRepository extends BaseRepository<Identity, UUID> {
-    List<Identity> findAllByIdentityFirstNameContainsIgnoreCaseOrIdentityLastNameContainsIgnoreCase(String identityName, String identityUrl);
 }
